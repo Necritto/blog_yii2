@@ -7,6 +7,7 @@ use app\models\Article;
 use app\models\ArticleSearch;
 use app\models\Category;
 use app\models\ImageUpload;
+use app\models\Tag;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -165,5 +166,20 @@ class ArticleController extends Controller
       'selectedCategory' => $selectedCategory,
       'categories' => $categories
     ]);
+  }
+
+  public function actionSetTag($id)
+  {
+    $article = $this->findModel($id);
+    $selectedTags = $article->getSelectedTags();
+    $tags = ArrayHelper::map(Tag::find()->all(), 'id', 'title');
+
+    if (Yii::$app->request->isPost) {
+      $tags = Yii::$app->request->post('tags');
+      $article->saveTags('tags');
+      return $this->redirect(['view', 'id' => $article->id]);
+    }
+
+    return $this->render('tag', ['selectedTags' => $selectedTags, 'tags' => $tags]);
   }
 }
