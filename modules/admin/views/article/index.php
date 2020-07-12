@@ -12,34 +12,41 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+  <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Article', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+  <p>
+    <?= Html::a('Create Article', ['create'], ['class' => 'btn btn-success']) ?>
+  </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+  <?php // echo $this->render('_search', ['model' => $searchModel]); 
+  ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+  <?= GridView::widget([
+    'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
+    'columns' => [
+      ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'title',
-            'description:ntext',
-            'content:ntext',
-            'date',
-            //'image',
-            //'viewed',
-            //'user_id',
-            //'status',
-            //'category_id',
+      'id',
+      'title',
+      'description:ntext',
+      'content:ntext',
+      'date',
+      [
+        'format' => 'html',
+        'label' => 'Image',
+        'value' => function ($data) {
+          return Html::img($data->getImage(), ['width' => 200]);
+        }
+      ],
+      //'image',
+      //'viewed',
+      //'user_id',
+      //'status',
+      //'category_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
+      ['class' => 'yii\grid\ActionColumn'],
+    ],
+  ]); ?>
 
 </div>
