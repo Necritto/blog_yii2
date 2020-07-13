@@ -97,9 +97,24 @@ class SiteController extends Controller
     ]);
   }
 
-  public function actionCategory()
+  public function actionCategory($id)
   {
-    return $this->render('category');
+    $query = Article::find()->where(['category_id' => $id]);
+    $count = $query->count();
+    $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 10]);
+    $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+
+    $popular = Article::getPopular();
+    $recent = Article::getRecent();
+    $categories = Category::getAll();
+
+    return $this->render('category', [
+      'articles' => $articles,
+      'pagination' => $pagination,
+      'popular' => $popular,
+      'recent' => $recent,
+      'categories' => $categories
+    ]);
   }
   /**
    * Login action.
