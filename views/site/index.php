@@ -33,7 +33,7 @@ $this->title = 'Blog Yii2';
                 </div>
               </div>
               <div class="social-share">
-                <span class="social-share-title pull-left text-capitalize">By <a href="#">Necritto</a><?= $article->getDate(); ?></span>
+                <span class="social-share-title pull-left text-capitalize">By <?= $article->author->name ?> on <?= $article->getDate(); ?></span>
                 <ul class="text-center pull-right">
                   <li>
                     <a class="s-facebook" href="#"><i class="fa fa-eye"></i></a>
