@@ -69,9 +69,9 @@ class SiteController extends Controller
     $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 5]);
     $articles = $query->offset($pagination->offset)->limit($pagination->limit)->all();
 
-    $popular = Article::find()->orderBy('viewed desc')->limit(3)->all();
-    $recent = Article::find()->orderBy('date asc')->limit(4)->all();
-    $categories = Category::find()->all();
+    $popular = Article::getPopular();
+    $recent = Article::getRecent();
+    $categories = Category::getAll();
 
     return $this->render('index', [
       'articles' => $articles,
@@ -82,9 +82,19 @@ class SiteController extends Controller
     ]);
   }
 
-  public function actionView()
+  public function actionView($id)
   {
-    return $this->render('single');
+    $article = Article::findOne($id);
+    $popular = Article::getPopular();
+    $recent = Article::getRecent();
+    $categories = Category::getAll();
+
+    return $this->render('single', [
+      'article' => $article,
+      'popular' => $popular,
+      'recent' => $recent,
+      'categories' => $categories
+    ]);
   }
 
   public function actionCategory()
