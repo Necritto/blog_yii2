@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -129,5 +130,10 @@ class Article extends \yii\db\ActiveRecord
   private function clearCurrentTags()
   {
     ArticleTag::deleteAll(['article_id' => $this->id]);
+  }
+
+  public function getDate()
+  {
+    return Yii::$app->formatter->asDate($this->date);
   }
 }
