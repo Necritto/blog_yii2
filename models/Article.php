@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -129,5 +130,20 @@ class Article extends \yii\db\ActiveRecord
   private function clearCurrentTags()
   {
     ArticleTag::deleteAll(['article_id' => $this->id]);
+  }
+
+  public function getDate()
+  {
+    return Yii::$app->formatter->asDate($this->date);
+  }
+
+  public static function getPopular()
+  {
+    return Article::find()->orderBy('viewed desc')->limit(3)->all();
+  }
+
+  public static function getRecent()
+  {
+    return Article::find()->orderBy('date asc')->limit(4)->all();
   }
 }
