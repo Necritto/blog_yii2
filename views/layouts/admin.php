@@ -40,7 +40,8 @@ AppAsset::register($this);
     echo Nav::widget([
       'options' => ['class' => 'navbar-nav navbar-right'],
       'items' => [
-        ['label' => 'Admin', 'url' => ['/admin/default/index']],
+        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Comments', 'url' => ['/admin/comment/index']],
         ['label' => 'Articles', 'url' => ['/admin/article/index']],
         ['label' => 'Categories', 'url' => ['/admin/category/index']],
         ['label' => 'Tags', 'url' => ['/admin/tag/index']],
@@ -67,6 +68,14 @@ AppAsset::register($this);
   </footer>
 
   <?php $this->endBody() ?>
+  <?php $this->registerJsFile('/ckeditor/ckeditor.js'); ?>
+  <?php $this->registerJsFile('/ckfinder/ckfinder.js'); ?>
+  <script>
+    $(document).ready(function() {
+      var editor = CKEDITOR.replaceAll();
+      CKFinder.setupCKEditor(editor);
+    });
+  </script>
 </body>
 
 </html>

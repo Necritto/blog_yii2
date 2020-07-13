@@ -31,7 +31,7 @@ use yii\widgets\LinkPager;
                     </p>
                   </div>
                   <div class="social-share">
-                    <span class="social-share-title pull-left text-capitalize">By Necritto On <?= $article->getDate(); ?></span>
+                    <span class="social-share-title pull-left text-capitalize">By <?= $article->author->name; ?> On <?= $article->getDate(); ?></span>
                   </div>
                 </div>
               </div>

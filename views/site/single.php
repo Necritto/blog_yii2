@@ -23,7 +23,7 @@ use yii\helpers\Url;
               <a href="#" class="btn btn-default">Decoration</a>
             </div>
             <div class="social-share">
-              <span class="social-share-title pull-left text-capitalize">By Necritto On <?= $article->getDate(); ?></span>
+              <span class="social-share-title pull-left text-capitalize">By <?= $article->author->name; ?> On <?= $article->getDate(); ?></span>
               <ul class="text-center pull-right">
                 <li>
                   <a class="s-facebook" href="#"><i class="fa fa-facebook"></i></a>
@@ -44,114 +44,32 @@ use yii\helpers\Url;
             </div>
           </div>
         </article>
-        <div class="top-comment">
-          <img src="/public/images/comment.jpg" class="pull-left img-circle" alt="" />
-          <h4>Necritto</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy hello ro
-            mod tempor invidunt ut labore et dolore magna aliquyam erat.
-          </p>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="single-blog-box">
-              <a href="#">
-                <img src="/public/images/blog-next.jpg" alt="" />
-                <div class="overlay">
-                  <div class="promo-text">
-                    <p><i class="pull-left fa fa-angle-left"></i></p>
-                    <h5>Necritto is doing Cherry theme</h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="single-blog-box">
-              <a href="#">
-                <img src="/public/images/blog-next.jpg" alt="" />
-                <div class="overlay">
-                  <div class="promo-text">
-                    <p><i class="pull-right fa fa-angle-right"></i></p>
-                    <h5>Necritto is doing Cherry theme</h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="related-post-carousel">
-          <div class="related-heading">
-            <h4>You might also like</h4>
-          </div>
-          <div class="items">
-            <div class="single-item">
-              <a href="#">
-                <img src="/public/images/related-post-1.jpg" alt="" />
-                <p>Just Wondering at Beach</p>
-              </a>
-            </div>
-            <div class="single-item">
-              <a href="#">
-                <img src="/public/images/related-post-2.jpg" alt="" />
-                <p>Just Wondering at Beach</p>
-              </a>
-            </div>
-            <div class="single-item">
-              <a href="#">
-                <img src="//public/images/related-post-3.jpg" alt="" />
-                <p>Just Wondering at Beach</p>
-              </a>
-            </div>
-            <div class="single-item">
-              <a href="#">
-                <img src="//public/images/related-post-1.jpg" alt="" />
-                <p>Just Wondering at Beach</p>
-              </a>
-            </div>
-            <div class="single-item">
-              <a href="#">
-                <img src="/public/images/related-post-2.jpg" alt="" />
-                <p>Just Wondering at Beach</p>
-              </a>
-            </div>
-            <div class="single-item">
-              <a href="#">
-                <img src="/public/images/related-post-3.jpg" alt="" />
-                <p>Just Wondering at Beach</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="bottom-comment">
-          <h4>3 comments</h4>
-          <div class="comment-img">
-            <img class="img-circle" src="/public/images/comment-img.jpg" alt="" />
-          </div>
-          <div class="comment-text">
-            <a href="#" class="replay btn pull-right"> Replay</a>
-            <h5>Necritto</h5>
-            <p class="comment-date">
-              July, 12, 2020 at 5:57 PM
-            </p>
-            <p class="para">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-              tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
-              vero eos et cusam et justo duo dolores et ea rebum.
-            </p>
-          </div>
-        </div>
-        <div class="leave-comment">
-          <h4>Leave a reply</h4>
-          <form class="form-horizontal contact-form" role="form" method="post" action="#">
-            <div class="form-group">
-              <div class="col-md-12">
-                <textarea class="form-control" rows="6" name="message" placeholder="Write Massage"></textarea>
+        <?php if (!empty($comments)) : ?>
+          <?php foreach ($comments as $comment) : ?>
+            <div class="bottom-comment">
+              <h4>3 comments</h4>
+              <div class="comment-img">
+                <img class="img-circle" src="/public/images/comment-img.jpg" alt="" />
+              </div>
+              <div class="comment-text">
+                <a href="#" class="replay btn pull-right">Replay</a>
+                <h5><?= $comment->user->name; ?></h5>
+                <p class="comment-date">
+                  <?= $comment->getDate(); ?>
+                </p>
+                <p class="para">
+                  <?= $comment->text; ?>
+                </p>
               </div>
             </div>
-            <a href="#" class="btn send-btn">Post Comment</a>
-          </form>
-        </div>
+          <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?= $this->render('/parts/comment', [
+          'article' => $article,
+          'comments' => $comments,
+          'commentForm' => $commentForm
+        ]) ?>
       </div>
       <?= $this->render('/parts/sidebar', [
         'popular' => $popular,
